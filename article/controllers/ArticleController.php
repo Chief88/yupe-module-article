@@ -17,8 +17,8 @@ class ArticleController extends yupe\components\controllers\FrontController
         $article = Article::model()->published();
 
         $article = ($this->isMultilang())
-            ? $article->language(Yii::app()->language)->find('alias = :alias', array(':alias' => $alias))
-            : $article->find('alias = :alias', array(':alias' => $alias));
+            ? $article->language(Yii::app()->language)->find('alias = :alias', [':alias' => $alias])
+            : $article->find('alias = :alias', [':alias' => $alias]);
 
         if (!$article) {
             throw new CHttpException(404, Yii::t('ArticleModule.article', 'Article article was not found!'));
@@ -31,56 +31,56 @@ class ArticleController extends yupe\components\controllers\FrontController
                 Yii::t('ArticleModule.article', 'You must be an authorized user for view this page!')
             );
 
-            $this->redirect(array(Yii::app()->getModule('user')->accountActivationSuccess));
+            $this->redirect([Yii::app()->getModule('user')->accountActivationSuccess]);
         }
 
-        $this->render('show', array('article' => $article));
+        $this->render('show', ['article' => $article]);
     }
 
     public function actionIndex()
     {
-        $dbCriteria = new CDbCriteria(array(
+        $dbCriteria = new CDbCriteria([
             'condition' => 't.status = :status',
-            'params'    => array(
+            'params'    => [
                 ':status' => Article::STATUS_PUBLISHED,
-            ),
+            ],
             'limit'     => $this->module->perPage,
             'order'     => 't.creation_date DESC',
-            'with'      => array('user'),
-        ));
+            'with'      => ['user'],
+        ]);
 
         if (!Yii::app()->user->isAuthenticated()) {
             $dbCriteria->mergeWith(
-                array(
+                [
                     'condition' => 'is_protected = :is_protected',
-                    'params'    => array(
+                    'params'    => [
                         ':is_protected' => Article::PROTECTED_NO
-                    )
-                )
+                    ]
+                ]
             );
         }
 
         if ($this->isMultilang()) {
             $dbCriteria->mergeWith(
-                array(
+                [
                     'condition' => 't.lang = :lang',
-                    'params'    => array(':lang' => Yii::app()->language),
-                )
+                    'params'    => [':lang' => Yii::app()->language],
+                ]
             );
         }
 
-        $dataProvider = new CActiveDataProvider('Article', array(
+        $dataProvider = new CActiveDataProvider('Article', [
             'criteria' => $dbCriteria,
-            'pagination'=>array(
+            'pagination'=>[
                 'pageSize'=>15,
-            ),
-        ));
+            ],
+        ]);
 
-        $category = \Category::model()->findByAttributes( array('alias' => 'stranica-stati'));
+        $category = \Category::model()->findByAttributes( ['alias' => 'poleznye-stati-i-rukovodstva']);
 
-        $this->render('index', array(
+        $this->render('index', [
             'dataProvider' => $dataProvider,
-            'category' => $category,
-        ));
+            'categoryModel' => $category,
+        ]);
     }
 }

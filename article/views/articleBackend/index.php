@@ -5,26 +5,26 @@
  * @var $this articleBackendController
  */
 
-$this->breadcrumbs = array(
-    Yii::t('ArticleModule.article', 'article') => array('/article/articleBackend/index'),
+$this->breadcrumbs = [
+    Yii::t('ArticleModule.article', 'article') => ['/article/articleBackend/index'],
     Yii::t('ArticleModule.article', 'Management'),
-);
+];
 
 $this->pageTitle = Yii::t('ArticleModule.article', 'article - management');
 
-$this->menu = array(
-    array(
+$this->menu = [
+    [
         'icon'  => 'fa fa-fw fa-list-alt',
         'label' => Yii::t('ArticleModule.article', 'article management'),
-        'url'   => array('/article/articleBackend/index')
-    ),
-    array(
+        'url'   => ['/article/articleBackend/index']
+    ],
+    [
         'icon'  => 'fa fa-fw fa-plus-square',
         'label' => Yii::t('ArticleModule.article', 'Create article'),
-        'url'   => array('/article/articleBackend/create')
-    ),
-);
-?>
+        'url'   => ['/article/articleBackend/create']
+    ],
+]; ?>
+
 <div class="page-header">
     <h1>
         <?php echo Yii::t('ArticleModule.article', 'article'); ?>
@@ -54,13 +54,13 @@ $this->menu = array(
     });
 "
     );
-    $this->renderPartial('_search', array('model' => $model));
+    $this->renderPartial('_search', ['model' => $model]);
     ?>
 </div>
 
 <?php $this->widget(
     'yupe\widgets\CustomGridView',
-    array(
+    [
         'id'                => 'article-grid',
         'sortableRows'      => true,
         'sortableAjaxSave'  => true,
@@ -68,43 +68,43 @@ $this->menu = array(
         'sortableAction'    => '/article/articleBackend/sortable',
         'dataProvider'      => $model->search(),
         'filter'            => $model,
-        'columns'           => array(
-            array(
+        'columns'           => [
+            [
                 'class'    => 'bootstrap.widgets.TbEditableColumn',
                 'name'     => 'title',
-                'editable' => array(
+                'editable' => [
                     'url'    => $this->createUrl('/article/articleBackend/inline'),
                     'mode'   => 'inline',
-                    'params' => array(
+                    'params' => [
                         Yii::app()->request->csrfTokenName => Yii::app()->request->csrfToken
-                    )
-                ),
-                'filter'   => CHtml::activeTextField($model, 'title', array('class' => 'form-control')),
-            ),
-            array(
+                    ]
+                ],
+                'filter'   => CHtml::activeTextField($model, 'title', ['class' => 'form-control']),
+            ],
+            [
                 'class'    => 'bootstrap.widgets.TbEditableColumn',
                 'name'     => 'alias',
-                'editable' => array(
+                'editable' => [
                     'url'    => $this->createUrl('/article/articleBackend/inline'),
                     'mode'   => 'inline',
-                    'params' => array(
+                    'params' => [
                         Yii::app()->request->csrfTokenName => Yii::app()->request->csrfToken
-                    )
-                ),
-                'filter'   => CHtml::activeTextField($model, 'alias', array('class' => 'form-control')),
-            ),
+                    ]
+                ],
+                'filter'   => CHtml::activeTextField($model, 'alias', ['class' => 'form-control']),
+            ],
             'date',
-            array(
+            [
                 'name'   => 'category_id',
                 'value'  => '$data->getCategoryName()',
                 'filter' => CHtml::activeDropDownList(
                     $model,
                     'category_id',
                     Category::model()->getFormattedList(Yii::app()->getModule('article')->mainCategory),
-                    array('class' => 'form-control', 'encode' => false, 'empty' => '')
+                    ['class' => 'form-control', 'encode' => false, 'empty' => '']
                 )
-            ),
-            array(
+            ],
+            [
                 'class'   => 'yupe\widgets\EditableStatusColumn',
                 'name'    => 'status',
                 'url'     => $this->createUrl('/article/articleBackend/inline'),
@@ -114,16 +114,23 @@ $this->menu = array(
                     article::STATUS_MODERATION => ['class' => 'label-warning'],
                     article::STATUS_DRAFT      => ['class' => 'label-default'],
                 ],
-            ),
-            array(
+            ],
+            [
                 'name'   => 'lang',
                 'value'  => '$data->getFlag()',
                 'filter' => $this->yupe->getLanguagesList(),
                 'type'   => 'html'
-            ),
-            array(
+            ],
+            [
+                'class'                => '\yupe\widgets\ToggleColumn',
+                'name'                 => 'no_index',
+                'checkedButtonLabel'   => Yii::t('ArticleModule.article', 'Turn off'),
+                'uncheckedButtonLabel' => Yii::t('ArticleModule.article', 'Turn on'),
+                'filter'               => $model->getNoIndexList(),
+            ],
+            [
                 'class' => 'yupe\widgets\CustomButtonColumn'
-            ),
-        ),
-    )
+            ],
+        ],
+    ]
 ); ?>

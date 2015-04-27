@@ -14,27 +14,31 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
 {
     public function accessRules()
     {
-        return array(
-            array('allow', 'roles' => array('admin')),
-            array('allow', 'actions' => array('create'), 'roles' => array('article.articleBackend.Create')),
-            array('allow', 'actions' => array('delete'), 'roles' => array('article.articleBackend.Delete')),
-            array('allow', 'actions' => array('index'), 'roles' => array('article.articleBackend.Index')),
-            array('allow', 'actions' => array('inlineEdit'), 'roles' => array('article.articleBackend.Update')),
-            array('allow', 'actions' => array('update'), 'roles' => array('article.articleBackend.Update')),
-            array('allow', 'actions' => array('view'), 'roles' => array('article.articleBackend.View')),
-            array('deny')
-        );
+        return [
+            ['allow', 'roles' => ['admin']],
+            ['allow', 'actions' => ['create'], 'roles' => ['article.articleBackend.Create']],
+            ['allow', 'actions' => ['delete'], 'roles' => ['article.articleBackend.Delete']],
+            ['allow', 'actions' => ['index'], 'roles' => ['article.articleBackend.Index']],
+            ['allow', 'actions' => ['inline'], 'roles' => ['article.articleBackend.Update']],
+            ['allow', 'actions' => ['update', 'toggle', 'inline'], 'roles' => ['article.articleBackend.Update']],
+            ['allow', 'actions' => ['view'], 'roles' => ['article.articleBackend.View']],
+            ['deny']
+        ];
     }
 
     public function actions()
     {
-        return array(
-            'inline' => array(
+        return [
+            'inline' => [
                 'class'           => 'yupe\components\actions\YInLineEditAction',
                 'model'           => 'Article',
-                'validAttributes' => array('title', 'alias', 'date', 'status')
-            )
-        );
+                'validAttributes' => ['title', 'alias', 'date', 'status']
+            ],
+            'toggle' => [
+                'class'     => 'booster.actions.TbToggleAction',
+                'modelName' => 'Article',
+            ],
+        ];
     }
 
     /**
@@ -46,7 +50,7 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
      */
     public function actionView($id)
     {
-        $this->render('view', array('model' => $this->loadModel($id)));
+        $this->render('view', ['model' => $this->loadModel($id)]);
     }
 
     /**
@@ -73,7 +77,7 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
                 $this->redirect(
                     (array)Yii::app()->getRequest()->getPost(
                         'submit-type',
-                        array('create')
+                        ['create']
                     )
                 );
             }
@@ -93,7 +97,7 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
                     Yii::t('ArticleModule.article', 'Targeting article was not found!')
                 );
 
-                $this->redirect(array('/article/articleBackend/create'));
+                $this->redirect(['/article/articleBackend/create']);
             }
 
             if (!array_key_exists($lang, $languages)) {
@@ -102,7 +106,7 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
                     Yii::t('ArticleModule.article', 'Language was not found!')
                 );
 
-                $this->redirect(array('/article/articleBackend/create'));
+                $this->redirect(['/article/articleBackend/create']);
             }
 
             Yii::app()->user->setFlash(
@@ -110,9 +114,9 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
                 Yii::t(
                     'ArticleModule.article',
                     'You inserting translation for {lang} language',
-                    array(
+                    [
                         '{lang}' => $languages[$lang]
-                    )
+                    ]
                 )
             );
             $model->lang = $lang;
@@ -133,7 +137,7 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
 
         $model->sort = $max->sort + 1; // Set sort in Adding Form as ma x+ 1
 
-        $this->render('create', array('model' => $model, 'languages' => $languages));
+        $this->render('create', ['model' => $model, 'languages' => $languages]);
     }
 
     /**
@@ -166,9 +170,9 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
                     Yii::app()->getRequest()->getIsPostRequest()
                         ? (array)Yii::app()->getRequest()->getPost(
                         'submit-type',
-                        array('update', 'id' => $model->id)
+                        ['update', 'id' => $model->id]
                     )
-                        : array('view', 'id' => $model->id)
+                        : ['view', 'id' => $model->id]
                 );
             }
         }
@@ -176,19 +180,19 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
         // найти по alias страницы на других языках
         $langModels = Article::model()->findAll(
             'alias = :alias AND id != :id',
-            array(
+            [
                 ':alias' => $model->alias,
                 ':id'    => $model->id
-            )
+            ]
         );
 
         $this->render(
             'update',
-            array(
+            [
                 'langModels' => CHtml::listData($langModels, 'lang', 'id'),
                 'model'      => $model,
                 'languages'  => $this->yupe->getLanguagesList()
-            )
+            ]
         );
     }
 
@@ -240,10 +244,10 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
         $model->setAttributes(
             Yii::app()->getRequest()->getParam(
                 'Article',
-                array()
+                []
             )
         );
-        $this->render('index', array('model' => $model));
+        $this->render('index', ['model' => $model]);
     }
 
     public function actionSortable()

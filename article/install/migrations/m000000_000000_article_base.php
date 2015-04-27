@@ -7,7 +7,7 @@ class m000000_000000_article_base extends yupe\components\DbMigration
     {
         $this->createTable(
             '{{article_article}}',
-            array(
+            [
                 'id'                => 'pk',
                 'category_id'       => 'integer DEFAULT NULL',
                 'lang'              => 'char(2) DEFAULT NULL',
@@ -30,7 +30,7 @@ class m000000_000000_article_base extends yupe\components\DbMigration
                 'page_title'        => 'varchar(250) NOT NULL',
                 'no_index'          => 'int(1) NOT NULL DEFAULT "0"',
                 'sort'              => 'integer NOT NULL DEFAULT "1"'
-            ),
+            ],
             $this->getOptions()
         );
 
