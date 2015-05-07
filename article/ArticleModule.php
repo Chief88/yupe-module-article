@@ -27,10 +27,10 @@ class ArticleModule extends WebModule
 
     public function getDependencies()
     {
-        return array(
+        return [
             'user',
             'category',
-        );
+        ];
     }
 
     public function getInstall()
@@ -44,28 +44,28 @@ class ArticleModule extends WebModule
 
     public function checkSelf()
     {
-        $messages = array();
+        $messages = [];
 
         $uploadPath = Yii::app()->uploadManager->getBasePath() . DIRECTORY_SEPARATOR . $this->uploadPath;
 
         if (!is_writable($uploadPath)) {
-            $messages[WebModule::CHECK_ERROR][] = array(
+            $messages[WebModule::CHECK_ERROR][] = [
                 'type'    => WebModule::CHECK_ERROR,
                 'message' => Yii::t(
                         'ArticleModule.article',
                         'Directory "{dir}" is not accessible for write! {link}',
-                        array(
+                        [
                             '{dir}'  => $uploadPath,
                             '{link}' => CHtml::link(
                                     Yii::t('ArticleModule.article', 'Change settings'),
-                                    array(
+                                    [
                                         '/yupe/backend/modulesettings/',
                                         'module' => 'article',
-                                    )
+                                    ]
                                 ),
-                        )
+                        ]
                     ),
-            );
+            ];
         }
 
         return (isset($messages[WebModule::CHECK_ERROR])) ? $messages : true;
@@ -73,30 +73,30 @@ class ArticleModule extends WebModule
 
     public function getParamsLabels()
     {
-        return array(
+        return [
             'mainCategory'      => Yii::t('ArticleModule.article', 'Main article category'),
             'adminMenuOrder'    => Yii::t('ArticleModule.article', 'Menu items order'),
             'editor'            => Yii::t('ArticleModule.article', 'Visual Editor'),
             'uploadPath'        => Yii::t(
                     'ArticleModule.article',
                     'Uploading files catalog (relatively {path})',
-                    array(
+                    [
                         '{path}' => Yii::getPathOfAlias('webroot') . DIRECTORY_SEPARATOR . Yii::app()->getModule(
                                 "yupe"
                             )->uploadPath
-                    )
+                    ]
                 ),
             'allowedExtensions' => Yii::t('ArticleModule.article', 'Accepted extensions (separated by comma)'),
             'minSize'           => Yii::t('ArticleModule.article', 'Minimum size (in bytes)'),
             'maxSize'           => Yii::t('ArticleModule.article', 'Maximum size (in bytes)'),
             'rssCount'          => Yii::t('ArticleModule.article', 'RSS records'),
             'perPage'           => Yii::t('ArticleModule.article', 'article per page')
-        );
+        ];
     }
 
     public function getEditableParams()
     {
-        return array(
+        return [
             'adminMenuOrder',
             'editor'       => Yii::app()->getModule('yupe')->getEditors(),
             'mainCategory' => CHtml::listData($this->getCategoryList(), 'id', 'name'),
@@ -106,37 +106,37 @@ class ArticleModule extends WebModule
             'maxSize',
             'rssCount',
             'perPage'
-        );
+        ];
     }
 
     public function getEditableParamsGroups()
     {
-        return array(
-            'main'   => array(
+        return [
+            'main'   => [
                 'label' => Yii::t('ArticleModule.article', 'General module settings'),
-                'items' => array(
+                'items' => [
                     'adminMenuOrder',
                     'editor',
                     'mainCategory'
-                )
-            ),
-            'images' => array(
+                ]
+            ],
+            'images' => [
                 'label' => Yii::t('ArticleModule.article', 'Images settings'),
-                'items' => array(
+                'items' => [
                     'uploadPath',
                     'allowedExtensions',
                     'minSize',
                     'maxSize'
-                )
-            ),
-            'list'   => array(
+                ]
+            ],
+            'list'   => [
                 'label' => Yii::t('ArticleModule.article', 'article lists'),
-                'items' => array(
+                'items' => [
                     'rssCount',
                     'perPage'
-                )
-            ),
-        );
+                ]
+            ],
+        ];
     }
 
     public function getVersion()
@@ -191,23 +191,23 @@ class ArticleModule extends WebModule
 
     public function getNavigation()
     {
-        return array(
-            array(
+        return [
+            [
                 'icon'  => 'fa fa-fw fa-list-alt',
                 'label' => Yii::t('ArticleModule.article', 'article list'),
-                'url'   => array('/article/articleBackend/index')
-            ),
-            array(
+                'url'   => ['/article/articleBackend/index']
+            ],
+            [
                 'icon'  => 'fa fa-fw fa-plus-square',
                 'label' => Yii::t('ArticleModule.article', 'Create article'),
-                'url'   => array('/article/articleBackend/create')
-            ),
-            array(
+                'url'   => ['/article/articleBackend/create']
+            ],
+            [
                 'icon'  => 'fa fa-fw fa-folder-open',
                 'label' => Yii::t('ArticleModule.article', 'article categories'),
-                'url'   => array('/category/categoryBackend/index', 'Category[parent_id]' => (int)$this->mainCategory)
-            ),
-        );
+                'url'   => ['/category/categoryBackend/index', 'Category[parent_id]' => (int)$this->mainCategory]
+            ],
+        ];
     }
 
     public function isMultiLang()
@@ -220,52 +220,52 @@ class ArticleModule extends WebModule
         parent::init();
 
         $this->setImport(
-            array(
+            [
                 'article.models.*'
-            )
+            ]
         );
     }
 
     public function getAuthItems()
     {
-        return array(
-            array(
+        return [
+            [
                 'name'        => 'article.articleManager',
                 'description' => Yii::t('ArticleModule.article', 'Manage article'),
                 'type'        => AuthItem::TYPE_TASK,
-                'items'       => array(
-                    array(
+                'items'       => [
+                    [
                         'type'        => AuthItem::TYPE_OPERATION,
                         'name'        => 'article.articleBackend.Create',
                         'description' => Yii::t('ArticleModule.article', 'Creating article')
-                    ),
-                    array(
+                    ],
+                    [
                         'type'        => AuthItem::TYPE_OPERATION,
                         'name'        => 'article.articleBackend.Delete',
                         'description' => Yii::t('ArticleModule.article', 'Removing article')
-                    ),
-                    array(
+                    ],
+                    [
                         'type'        => AuthItem::TYPE_OPERATION,
                         'name'        => 'article.articleBackend.Index',
                         'description' => Yii::t('ArticleModule.article', 'List of article')
-                    ),
-                    array(
+                    ],
+                    [
                         'type'        => AuthItem::TYPE_OPERATION,
                         'name'        => 'article.articleBackend.Update',
                         'description' => Yii::t('ArticleModule.article', 'Editing article')
-                    ),
-                    array(
+                    ],
+                    [
                         'type'        => AuthItem::TYPE_OPERATION,
                         'name'        => 'article.articleBackend.Inline',
                         'description' => Yii::t('ArticleModule.article', 'Editing article')
-                    ),
-                    array(
+                    ],
+                    [
                         'type'        => AuthItem::TYPE_OPERATION,
                         'name'        => 'article.articleBackend.View',
                         'description' => Yii::t('ArticleModule.article', 'Viewing article')
-                    ),
-                )
-            )
-        );
+                    ],
+                ]
+            ]
+        ];
     }
 }

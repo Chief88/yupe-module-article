@@ -16,7 +16,7 @@
  *
  * NOTE, this file must be saved in UTF-8 encoding.
  */
-return array(
+return [
     'article categories'                                                  => 'Категории статей',
     'article lists'                                                       => 'Списки статей',
     'General module settings'                                          => 'Основные настройки модуля',
@@ -123,4 +123,4 @@ return array(
     'Name author'                                                         => 'Имя автора',
     'Video url'                                                         => 'Url видео',
 
-);
+];

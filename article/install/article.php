@@ -1,13 +1,13 @@
 <?php
 
-return array(
-    'module'    => array(
+return [
+    'module'    => [
         'class' => 'application.modules.article.ArticleModule',
-    ),
-    'import'    => array(),
-    'component' => array(),
-    'rules'     => array(
+    ],
+    'import'    => [],
+    'component' => [],
+    'rules'     => [
         '/article/'        => 'article/article/index',
         '/article/<alias>' => 'article/article/show',
-    ),
-);
+    ],
+];

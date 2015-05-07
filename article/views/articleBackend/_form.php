@@ -10,13 +10,13 @@
 <?php
 $form = $this->beginWidget(
     'bootstrap.widgets.TbActiveForm',
-    array(
+    [
         'id'                     => 'article-form',
         'enableAjaxValidation'   => false,
         'enableClientValidation' => true,
         'type'                   => 'vertical',
-        'htmlOptions'            => array('class' => 'well', 'enctype' => 'multipart/form-data'),
-    )
+        'htmlOptions'            => ['class' => 'well', 'enctype' => 'multipart/form-data'],
+    ]
 ); ?>
 <div class="alert alert-info">
     <?php echo Yii::t('ArticleModule.article', 'Fields with'); ?>
@@ -28,20 +28,20 @@ $form = $this->beginWidget(
 
 <div class="row">
 
-    <div class="col-sm-3">
+    <div class="col-sm-4">
         <?php echo $form->datePickerGroup(
             $model,
             'date',
-            array(
-                'widgetOptions' => array(
-                    'options' => array(
+            [
+                'widgetOptions' => [
+                    'options' => [
                         'format'    => 'dd-mm-yyyy',
                         'weekStart' => 1,
                         'autoclose' => true,
-                    ),
-                ),
+                    ],
+                ],
                 'prepend'       => '<i class="fa fa-calendar"></i>',
-            )
+            ]
         );
         ?>
     </div>
@@ -50,11 +50,11 @@ $form = $this->beginWidget(
         <?php echo $form->dropDownListGroup(
             $model,
             'status',
-            array(
-                'widgetOptions' => array(
+            [
+                'widgetOptions' => [
                     'data' => $model->getStatusList(),
-                ),
-            )
+                ],
+            ]
         ); ?>
     </div>
 
@@ -63,14 +63,14 @@ $form = $this->beginWidget(
             <?php echo $form->dropDownListGroup(
                 $model,
                 'lang',
-                array(
-                    'widgetOptions' => array(
+                [
+                    'widgetOptions' => [
                         'data'        => $languages,
-                        'htmlOptions' => array(
+                        'htmlOptions' => [
                             'empty' => Yii::t('ArticleModule.article', '-no matter-'),
-                        ),
-                    ),
-                )
+                        ],
+                    ],
+                ]
             ); ?>
             <?php if (!$model->isNewRecord): { ?>
                 <?php foreach ($languages as $k => $v): { ?>
@@ -78,20 +78,20 @@ $form = $this->beginWidget(
                         <?php if (empty($langModels[$k])): { ?>
                             <a href="<?php echo $this->createUrl(
                                 '/article/articleBackend/create',
-                                array('id' => $model->id, 'lang' => $k)
+                                ['id' => $model->id, 'lang' => $k]
                             ); ?>"><i class="iconflags iconflags-<?php echo $k; ?>" title="<?php echo Yii::t(
                                     'ArticleModule.article',
                                     'Add translation for {lang} language',
-                                    array('{lang}' => $v)
+                                    ['{lang}' => $v]
                                 ) ?>"></i></a>
                         <?php } else: { ?>
                             <a href="<?php echo $this->createUrl(
                                 '/article/articleBackend/update',
-                                array('id' => $langModels[$k])
+                                ['id' => $langModels[$k]]
                             ); ?>"><i class="iconflags iconflags-<?php echo $k; ?>" title="<?php echo Yii::t(
                                     'ArticleModule.article',
                                     'Edit translation in to {lang} language',
-                                    array('{lang}' => $v)
+                                    ['{lang}' => $v]
                                 ) ?>"></i></a>
                         <?php } endif; ?>
                     <?php } endif; ?>
@@ -109,17 +109,17 @@ $form = $this->beginWidget(
         <?php echo $form->dropDownListGroup(
             $model,
             'category_id',
-            array(
-                'widgetOptions' => array(
+            [
+                'widgetOptions' => [
                     'data'        => Category::model()->getFormattedList(
                             (int)Yii::app()->getModule('article')->mainCategory
                         ),
-                    'htmlOptions' => array(
+                    'htmlOptions' => [
                         'empty'  => Yii::t('ArticleModule.article', '--choose--'),
                         'encode' => false
-                    ),
-                ),
-            )
+                    ],
+                ],
+            ]
         ); ?>
     </div>
 </div>
@@ -148,22 +148,22 @@ $form = $this->beginWidget(
         echo CHtml::image(
             !$model->isNewRecord && $model->image ? $model->getImageUrl() : '#',
             $model->title,
-            array(
+            [
                 'class' => 'preview-image',
                 'style' => !$model->isNewRecord && $model->image ? '' : 'display:none'
-            )
+            ]
         ); ?>
         <?php echo $form->fileFieldGroup(
             $model,
             'image',
-            array(
-                'widgetOptions' => array(
-                    'htmlOptions' => array(
+            [
+                'widgetOptions' => [
+                    'htmlOptions' => [
                         'onchange' => 'readURL(this);',
                         'style'    => 'background-color: inherit;'
-                    )
-                )
-            )
+                    ]
+                ]
+            ]
         ); ?>
     </div>
 </div>
@@ -179,10 +179,10 @@ $form = $this->beginWidget(
         <?php echo $form->labelEx($model, 'full_text'); ?>
         <?php $this->widget(
             $this->module->getVisualEditor(),
-            array(
+            [
                 'model'     => $model,
                 'attribute' => 'full_text',
-            )
+            ]
         ); ?>
         <span class="help-block">
             <?php echo Yii::t(
@@ -199,10 +199,10 @@ $form = $this->beginWidget(
         <?php echo $form->labelEx($model, 'short_text'); ?>
         <?php $this->widget(
             $this->module->getVisualEditor(),
-            array(
+            [
                 'model'     => $model,
                 'attribute' => 'short_text',
-            )
+            ]
         ); ?>
         <span class="help-block">
             <?php echo Yii::t(
@@ -274,26 +274,26 @@ $form = $this->beginWidget(
 
 <?php $this->widget(
     'bootstrap.widgets.TbButton',
-    array(
+    [
         'buttonType' => 'submit',
         'context'    => 'primary',
         'label'      => $model->isNewRecord ? Yii::t('ArticleModule.article', 'Create article and continue') : Yii::t(
                 'ArticleModule.article',
                 'Save article article and continue'
             ),
-    )
+    ]
 ); ?>
 
 <?php $this->widget(
     'bootstrap.widgets.TbButton',
-    array(
+    [
         'buttonType'  => 'submit',
-        'htmlOptions' => array('name' => 'submit-type', 'value' => 'index'),
+        'htmlOptions' => ['name' => 'submit-type', 'value' => 'index'],
         'label'       => $model->isNewRecord ? Yii::t('ArticleModule.article', 'Create article and close') : Yii::t(
                 'ArticleModule.article',
                 'Save article article and close'
             ),
-    )
+    ]
 ); ?>
 
 <?php $this->endWidget(); ?>

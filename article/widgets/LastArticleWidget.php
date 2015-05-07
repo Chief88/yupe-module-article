@@ -27,6 +27,6 @@ class LastArticleWidget extends yupe\widgets\YWidget
             ? Article::model()->published()->language(Yii::app()->language)->cache($this->cacheTime)->findAll($criteria)
             : Article::model()->published()->cache($this->cacheTime)->findAll($criteria);
 
-        $this->render($this->view, array('models' => $article));
+        $this->render($this->view, ['models' => $article]);
     }
 }

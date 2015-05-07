@@ -1,6 +1,6 @@
 <?php Yii::import('application.modules.article.ArticleModule'); ?>
 
-<?php if (isset($models) && $models != array()): ?>
+<?php if (isset($models) && $models != []): ?>
 
     <div class="right-side-news">
         <div class="block-title"><a href="/article">Статьи</a></div>

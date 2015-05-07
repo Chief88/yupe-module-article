@@ -1,51 +1,51 @@
 <?php
-$this->breadcrumbs = array(
-    Yii::t('ArticleModule.article', 'Article') => array('/article/articleBackend/index'),
+$this->breadcrumbs = [
+    Yii::t('ArticleModule.article', 'Article') => ['/article/articleBackend/index'],
     $model->title,
-);
+];
 
 $this->pageTitle = Yii::t('ArticleModule.article', 'Article - show');
 
-$this->menu = array(
-    array(
+$this->menu = [
+    [
         'icon'  => 'fa fa-fw fa-list-alt',
         'label' => Yii::t('ArticleModule.article', 'Article management'),
-        'url'   => array('/article/articleBackend/index')
-    ),
-    array(
+        'url'   => ['/article/articleBackend/index']
+    ],
+    [
         'icon'  => 'fa fa-fw fa-plus-square',
         'label' => Yii::t('ArticleModule.article', 'Create article'),
-        'url'   => array('/article/articleBackend/create')
-    ),
-    array('label' => Yii::t('ArticleModule.article', 'Article Article') . ' «' . mb_substr($model->title, 0, 32) . '»'),
-    array(
+        'url'   => ['/article/articleBackend/create']
+    ],
+    ['label' => Yii::t('ArticleModule.article', 'Article Article') . ' «' . mb_substr($model->title, 0, 32) . '»'],
+    [
         'icon'  => 'fa fa-fw fa-pencil',
         'label' => Yii::t('ArticleModule.article', 'Edit Article article'),
-        'url'   => array(
+        'url'   => [
             '/article/articleBackend/update',
             'id' => $model->id
-        )
-    ),
-    array(
+        ]
+    ],
+    [
         'icon'  => 'fa fa-fw fa-eye',
         'label' => Yii::t('ArticleModule.article', 'View Article article'),
-        'url'   => array(
+        'url'   => [
             '/article/articleBackend/view',
             'id' => $model->id
-        )
-    ),
-    array(
+        ]
+    ],
+    [
         'icon'        => 'fa fa-fw fa-trash-o',
         'label'       => Yii::t('ArticleModule.article', 'Remove Article'),
         'url'         => '#',
-        'linkOptions' => array(
-            'submit'  => array('/article/articleBackend/delete', 'id' => $model->id),
-            'params'  => array(Yii::app()->getRequest()->csrfTokenName => Yii::app()->getRequest()->csrfToken),
+        'linkOptions' => [
+            'submit'  => ['/article/articleBackend/delete', 'id' => $model->id],
+            'params'  => [Yii::app()->getRequest()->csrfTokenName => Yii::app()->getRequest()->csrfToken],
             'confirm' => Yii::t('ArticleModule.article', 'Do you really want to remove the article?'),
             'csrf'    => true,
-        )
-    ),
-);
+        ]
+    ],
+];
 ?>
 
 <div class="page-header">
@@ -67,7 +67,7 @@ $this->menu = array(
         <div style="margin-bottom: 20px;">
             <h6>
                 <span class="label label-info"><?php echo $model->date; ?></span>
-                <?php echo CHtml::link($model->title, array('/Article/Article/show', 'alias' => $model->alias)); ?>
+                <?php echo CHtml::link($model->title, ['/Article/Article/show', 'alias' => $model->alias]); ?>
             </h6>
 
             <p>
@@ -83,7 +83,7 @@ $this->menu = array(
         <div style="margin-bottom: 20px;">
             <h3><?php echo CHtml::link(
                     CHtml::encode($model->title),
-                    array('/Article/Article/show', 'alias' => $model->alias)
+                    ['/Article/Article/show', 'alias' => $model->alias]
                 ); ?></h3>
             <?php if ($model->image): { ?>
                 <?php echo CHtml::image($model->getImageUrl(), $model->title); ?>
@@ -92,7 +92,7 @@ $this->menu = array(
             <span class="label label-info"><?php echo $model->date; ?></span>
             <i class="fa fa-fw fa-user"></i><?php echo CHtml::link(
                 $model->user->fullName,
-                array('/user/people/' . $model->user->nick_name)
+                ['/user/people/' . $model->user->nick_name]
             ); ?>
             <i class="fa fa-fw fa-globe"></i><?php echo CHtml::link(
                 $model->getPermaLink(),

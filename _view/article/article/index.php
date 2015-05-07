@@ -13,13 +13,13 @@ if (!empty($category)) {
 
     <?php $this->widget(
         'bootstrap.widgets.TbListView',
-        array(
+        [
             'dataProvider'  => $dataProvider,
             'itemView'      => '_view',
             'template'      => "{items}\n{pager}",
             'itemsCssClass' => 'news-list',
             'itemsTagName'  => 'ul',
-            'pager' => array(
+            'pager' => [
                 'cssFile' => false,
                 'prevPageLabel' => '',
                 'firstPageLabel' => '',
@@ -31,12 +31,12 @@ if (!empty($category)) {
                 'lastPageCssClass' => 'page-list-nav page-last',
                 'selectedPageCssClass' => 'selected no-click',
                 'header' => '',
-                'htmlOptions' => array(
+                'htmlOptions' => [
                     'class' => 'page-list',
-                ),
+                ],
 
-            ),
-        )
+            ],
+        ]
     ); ?>
 
 </div>
