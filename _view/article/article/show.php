@@ -1,8 +1,8 @@
 <?php
-    $this->description = !empty($article->seo_description) ? $article->seo_description : $this->description;
-    $this->keywords = !empty($article->seo_keywords) ? $article->seo_keywords : $this->keywords;
-    $this->pageTitle = !empty($article->page_title) ? $article->page_title : $article->title;
-    $this->noIndex = $article->no_index == 1 ? true : false;
+$this->pageTitle = !empty($article->page_title) ? $article->page_title : $article->title;
+$this->metaDescription = !empty($article->seo_description) ? $article->seo_description : $this->metaDescription;
+$this->metaKeywords = !empty($article->seo_keywords) ? $article->seo_keywords : $this->metaKeywords;
+$this->metaNoIndex = $article->no_index == 1 ? true : false;
 ?>
 
 <div class="content">

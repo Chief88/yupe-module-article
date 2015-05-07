@@ -1,8 +1,10 @@
-<?php
-if (!empty($category)) {
-    $this->description = !empty($category->seo_description) ? $category->seo_description : $this->description;
-    $this->keywords = !empty($category->seo_keywords) ? $category->seo_keywords : $this->keywords;
-    $this->pageTitle = !empty($category->page_title) ? $category->page_title : $this->pageTitle;
+<?php if (!empty($categoryModel)) {
+
+    $this->pageTitle = !empty($categoryModel->page_title) ? $categoryModel->page_title : $this->pageTitle;
+    $this->metaDescription = !empty($categoryModel->seo_description) ? $categoryModel->seo_description : $this->metaDescription;
+    $this->metaKeywords = !empty($categoryModel->seo_keywords) ? $categoryModel->seo_keywords : $this->metaKeywords;
+    $this->metaNoIndex = $categoryModel->no_index == 1 ? true : false;
+
 } ?>
 
 <div class="content">
