@@ -67,7 +67,7 @@ $this->menu = [
         <div style="margin-bottom: 20px;">
             <h6>
                 <span class="label label-info"><?php echo $model->date; ?></span>
-                <?php echo CHtml::link($model->title, ['/Article/Article/show', 'alias' => $model->alias]); ?>
+                <?php echo CHtml::link($model->title, ['/Article/Article/show', 'slug' => $model->slug]); ?>
             </h6>
 
             <p>
@@ -83,7 +83,7 @@ $this->menu = [
         <div style="margin-bottom: 20px;">
             <h3><?php echo CHtml::link(
                     CHtml::encode($model->title),
-                    ['/Article/Article/show', 'alias' => $model->alias]
+                    ['/Article/Article/show', 'slug' => $model->slug]
                 ); ?></h3>
             <?php if ($model->image): { ?>
                 <?php echo CHtml::image($model->getImageUrl(), $model->title); ?>

@@ -8,6 +8,6 @@ return [
     'component' => [],
     'rules'     => [
         '/article/'        => 'article/article/index',
-        '/article/<alias>' => 'article/article/show',
+        '/article/<slug>' => 'article/article/show',
     ],
 ];

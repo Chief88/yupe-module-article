@@ -12,13 +12,13 @@
  */
 class ArticleController extends yupe\components\controllers\FrontController
 {
-    public function actionShow($alias)
+    public function actionShow($slug)
     {
         $article = Article::model()->published();
 
         $article = ($this->isMultilang())
-            ? $article->language(Yii::app()->language)->find('alias = :alias', [':alias' => $alias])
-            : $article->find('alias = :alias', [':alias' => $alias]);
+            ? $article->language(Yii::app()->language)->find('slug = :slug', [':slug' => $slug])
+            : $article->find('slug = :slug', [':slug' => $slug]);
 
         if (!$article) {
             throw new CHttpException(404, Yii::t('ArticleModule.article', 'Article article was not found!'));
@@ -76,7 +76,7 @@ class ArticleController extends yupe\components\controllers\FrontController
             ],
         ]);
 
-        $category = \Category::model()->findByAttributes( ['alias' => 'poleznye-stati-i-rukovodstva']);
+        $category = \Category::model()->findByAttributes( ['slug' => 'poleznye-stati-i-rukovodstva']);
 
         $this->render('index', [
             'dataProvider' => $dataProvider,

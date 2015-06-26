@@ -19,7 +19,7 @@
  * @property string $change_date
  * @property string $date
  * @property string $title
- * @property string $alias
+ * @property string $slug
  * @property string $name_author
  * @property string $short_text
  * @property string $full_text
@@ -73,7 +73,7 @@ class Article extends yupe\models\YModel
             'change_date'   => Yii::t('ArticleModule.article', 'Updated at'),
             'date'          => Yii::t('ArticleModule.article', 'Date'),
             'title'         => Yii::t('ArticleModule.article', 'Title'),
-            'alias'         => Yii::t('ArticleModule.article', 'Alias'),
+            'slug'          => Yii::t('ArticleModule.article', 'Alias'),
             'image'         => Yii::t('ArticleModule.article', 'Image'),
             'link'          => Yii::t('ArticleModule.article', 'Link'),
             'lang'          => Yii::t('ArticleModule.article', 'Language'),
@@ -98,27 +98,27 @@ class Article extends yupe\models\YModel
     public function rules()
     {
         return [
-            ['title, alias, short_text, full_text, seo_keywords, seo_description', 'filter', 'filter' => 'trim'],
-            ['title, alias, seo_keywords, seo_description', 'filter', 'filter' => [new CHtmlPurifier(), 'purify']],
-            ['date, alias, full_text', 'required', 'on' => ['update', 'insert']],
+            ['title, slug, short_text, full_text, seo_keywords, seo_description', 'filter', 'filter' => 'trim'],
+            ['title, slug, seo_keywords, seo_description', 'filter', 'filter' => [new CHtmlPurifier(), 'purify']],
+            ['date, slug, full_text', 'required', 'on' => ['update', 'insert']],
             ['sort, no_index, status, is_protected, category_id', 'numerical', 'integerOnly' => true],
-            ['title, alias', 'length', 'max' => 150],
+            ['title, slug', 'length', 'max' => 150],
             ['lang', 'length', 'max' => 2],
             ['lang', 'default', 'value' => Yii::app()->sourceLanguage],
             ['lang', 'in', 'range' => array_keys(Yii::app()->getModule('yupe')->getLanguagesList())],
             ['status', 'in', 'range' => array_keys($this->getStatusList())],
-            ['alias', 'yupe\components\validators\YUniqueSlugValidator'],
+            ['slug', 'yupe\components\validators\YUniqueSlugValidator'],
             ['seo_description, seo_keywords, page_title, name_author, link', 'length', 'max' => 250],
             ['video_url', 'length', 'max' => 500],
             ['video_url', 'yupe\components\validators\YUrlValidator'],
             [
-                'alias',
+                'slug',
                 'yupe\components\validators\YSLugValidator',
                 'message' => Yii::t('ArticleModule.article', 'Bad characters in {attribute} field')
             ],
             ['category_id', 'default', 'setOnEmpty' => true, 'value' => null],
             [
-                'sort, no_index, page_title, id, seo_keywords, seo_description, creation_date, change_date, date, title, alias, short_text, full_text, user_id, status, is_protected, lang',
+                'sort, no_index, page_title, id, seo_keywords, seo_description, creation_date, change_date, date, title, slug, short_text, full_text, user_id, status, is_protected, lang',
                 'safe',
                 'on' => 'search'
             ],
@@ -132,13 +132,20 @@ class Article extends yupe\models\YModel
         return [
             'imageUpload' => [
                 'class'         => 'yupe\components\behaviors\ImageUploadBehavior',
-                'scenarios'     => ['insert', 'update'],
                 'attributeName' => 'image',
                 'minSize'       => $module->minSize,
                 'maxSize'       => $module->maxSize,
                 'types'         => $module->allowedExtensions,
                 'uploadPath'    => $module->uploadPath,
-                'fileName'      => [$this, 'generateFileName'],
+                'resizeOptions' => [
+                    'width'   => 9999,
+                    'height'  => 9999,
+                    'quality' => [
+                        'jpegQuality'         => 100,
+                        'pngCompressionLevel' => 10
+                    ],
+                ],
+                'defaultImage'   => $module->getAssetsUrl() . '/img/nophoto.jpg',
             ],
         ];
     }
@@ -219,8 +226,8 @@ class Article extends yupe\models\YModel
 
     public function beforeValidate()
     {
-        if (!$this->alias) {
-            $this->alias = yupe\helpers\YText::translit($this->title);
+        if (!$this->slug) {
+            $this->slug = yupe\helpers\YText::translit($this->title);
         }
 
         if (!$this->lang) {
@@ -268,7 +275,7 @@ class Article extends yupe\models\YModel
             $criteria->compare('date', date('Y-m-d', strtotime($this->date)));
         }
         $criteria->compare('title', $this->title, true);
-        $criteria->compare('t.alias', $this->alias, true);
+        $criteria->compare('t.slug', $this->slug, true);
         $criteria->compare('short_text', $this->short_text, true);
         $criteria->compare('full_text', $this->full_text, true);
         $criteria->compare('user_id', $this->user_id);
@@ -288,7 +295,7 @@ class Article extends yupe\models\YModel
 
     public function getPermaLink()
     {
-        return Yii::app()->createAbsoluteUrl('/article/article/show/', ['alias' => $this->alias]);
+        return Yii::app()->createAbsoluteUrl('/article/article/show/', ['slug' => $this->slug]);
     }
 
     public function getStatusList()

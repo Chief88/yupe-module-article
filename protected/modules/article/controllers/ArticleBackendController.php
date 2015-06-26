@@ -32,7 +32,7 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
             'inline' => [
                 'class'           => 'yupe\components\actions\YInLineEditAction',
                 'model'           => 'Article',
-                'validAttributes' => ['title', 'alias', 'date', 'status']
+                'validAttributes' => ['title', 'slug', 'date', 'status']
             ],
             'toggle' => [
                 'class'     => 'booster.actions.TbToggleAction',
@@ -120,7 +120,7 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
                 )
             );
             $model->lang = $lang;
-            $model->alias = $article->alias;
+            $model->slug = $article->slug;
             $model->date = $article->date;
             $model->category_id = $article->category_id;
             $model->title = $article->title;
@@ -144,7 +144,7 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
      *
-     * @param null $alias
+     * @param null $slug
      * @param integer $id the ID of the model to be updated
      *
      * @throws CHttpException
@@ -177,11 +177,11 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
             }
         }
 
-        // найти по alias страницы на других языках
+        // найти по slug страницы на других языках
         $langModels = Article::model()->findAll(
-            'alias = :alias AND id != :id',
+            'slug = :slug AND id != :id',
             [
-                ':alias' => $model->alias,
+                ':slug' => $model->slug,
                 ':id'    => $model->id
             ]
         );
@@ -200,7 +200,7 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
      * Deletes a particular model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      *
-     * @param null $alias
+     * @param null $slug
      * @param integer $id the ID of the model to be deleted
      *
      * @throws CHttpException

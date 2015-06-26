@@ -2,7 +2,7 @@
     $(document).ready(function () {
         $('#article-form').liTranslit({
             elName: '#Article_title',
-            elAlias: '#Article_alias'
+            elAlias: '#Article_slug'
         });
     })
 </script>
@@ -132,7 +132,7 @@ $form = $this->beginWidget(
 
 <div class="row">
     <div class="col-sm-7">
-        <?php echo $form->textFieldGroup($model, 'alias'); ?>
+        <?php echo $form->textFieldGroup($model, 'slug'); ?>
     </div>
 </div>
 
