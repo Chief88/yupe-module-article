@@ -1,12 +1,12 @@
 <?php
 /**
- * article основная моделька для новостей
+ * Article
  *
- * @author yupe team <team@yupe.ru>
- * @link http://yupe.ru
- * @copyright 2009-2013 amyLabs && Yupe! team
+ * @author Chief88 <serg.latyshkov@gmail.com>
+ * @link https://github.com/Chief88/yupe-module-article
+ *
  * @package yupe.modules.article.models
- * @since 0.1
+ *
  *
  */
 

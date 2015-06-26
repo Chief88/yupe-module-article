@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ArticleController контроллер для работы с новостями в публичной части сайта
+ * ArticleController
  *
- * @author yupe team <team@yupe.ru>
- * @link http://yupe.ru
- * @copyright 2009-2013 amyLabs && Yupe! team
+ * @author Chief88 <serg.latyshkov@gmail.com>
+ * @link https://github.com/Chief88/yupe-module-article
+ *
  * @package yupe.modules.Article.controllers
- * @since 0.1
+ *
  *
  */
 class ArticleController extends yupe\components\controllers\FrontController

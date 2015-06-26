@@ -1,11 +1,11 @@
 <?php
 
 /**
- * articleBackendController контроллер для работы с новостями в панели управления
+ * articleBackendController
  *
- * @author    yupe team <team@yupe.ru>
+ * @author    Chief88 <serg.latyshkov@gmail.com>
  * @link      http://yupe.ru
- * @copyright 2009-2013 amyLabs && Yupe! team
+ *
  * @package   yupe.modules.article.controllers
  * @version   0.6
  *

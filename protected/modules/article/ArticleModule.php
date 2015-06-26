@@ -3,11 +3,11 @@
 /**
  * ArticleModule основной класс модуля article
  *
- * @author yupe team <team@yupe.ru>
- * @link http://yupe.ru
- * @copyright 2009-2013 amyLabs && Yupe! team
+ * @author Chief88 <serg.latyshkov@gmail.com>
+ * @link https://github.com/Chief88/yupe-module-article
+ *
  * @package yupe.modules.article
- * @since 0.1
+ *
  *
  */
 
@@ -15,7 +15,7 @@ use yupe\components\WebModule;
 
 class ArticleModule extends WebModule
 {
-    const VERSION = '0.9';
+    const VERSION = '0.9.6';
 
     public $uploadPath = 'article';
     public $allowedExtensions = 'jpg,jpeg,png,gif';
@@ -166,17 +166,17 @@ class ArticleModule extends WebModule
 
     public function getAuthor()
     {
-        return Yii::t('ArticleModule.article', 'yupe team');
+        return Yii::t('ArticleModule.article', 'Chief88');
     }
 
     public function getAuthorEmail()
     {
-        return Yii::t('ArticleModule.article', 'team@yupe.ru');
+        return Yii::t('ArticleModule.article', 'serg.latyshkov@gmail.com');
     }
 
     public function getUrl()
     {
-        return Yii::t('ArticleModule.article', 'http://yupe.ru');
+        return Yii::t('ArticleModule.article', 'https://github.com/Chief88/yupe-module-article');
     }
 
     public function getIcon()
@@ -201,11 +201,6 @@ class ArticleModule extends WebModule
                 'icon'  => 'fa fa-fw fa-plus-square',
                 'label' => Yii::t('ArticleModule.article', 'Create article'),
                 'url'   => ['/article/articleBackend/create']
-            ],
-            [
-                'icon'  => 'fa fa-fw fa-folder-open',
-                'label' => Yii::t('ArticleModule.article', 'article categories'),
-                'url'   => ['/category/categoryBackend/index', 'Category[parent_id]' => (int)$this->mainCategory]
             ],
         ];
     }
