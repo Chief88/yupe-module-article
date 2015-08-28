@@ -293,6 +293,11 @@ class Article extends yupe\models\YModel
         ]);
     }
 
+    public function getLink()
+    {
+        return Yii::app()->createUrl('/article/article/show/', ['slug' => $this->slug]);
+    }
+
     public function getPermaLink()
     {
         return Yii::app()->createAbsoluteUrl('/article/article/show/', ['slug' => $this->slug]);

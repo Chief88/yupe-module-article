@@ -8,9 +8,9 @@
         <?php foreach ($models as $model): ?>
 
             <div class="news-item">
-                <div class="n-date"><?php echo $model->date; ?></div>
+                <div class="n-date"><?= $model->date; ?></div>
                 <div class="n-title">
-                    <a href="/article/<?php echo $model->slug; ?>"><?php echo $model->title; ?></a>
+                    <a href="<?= $model->getLink(); ?>"><?= $model->title; ?></a>
                 </div>
             </div>
 
