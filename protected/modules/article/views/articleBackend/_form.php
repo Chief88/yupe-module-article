@@ -1,15 +1,15 @@
-<script type='text/javascript'>
-    $(document).ready(function () {
-        $('#article-form').liTranslit({
-            elName: '#Article_title',
-            elAlias: '#Article_slug'
-        });
-    })
-</script>
+<!--<script type='text/javascript'>-->
+<!--    $(document).ready(function () {-->
+<!--        $('#article-form').liTranslit({-->
+<!--            elName: '#Article_title',-->
+<!--            elAlias: '#Article_slug'-->
+<!--        });-->
+<!--    })-->
+<!--</script>-->
 
 <?php
 $form = $this->beginWidget(
-    'bootstrap.widgets.TbActiveForm',
+    '\yupe\widgets\ActiveForm',
     [
         'id'                     => 'article-form',
         'enableAjaxValidation'   => false,
@@ -132,7 +132,7 @@ $form = $this->beginWidget(
 
 <div class="row">
     <div class="col-sm-7">
-        <?php echo $form->textFieldGroup($model, 'slug'); ?>
+        <?php echo $form->slugFieldGroup($model, 'slug', ['sourceAttribute' => 'title']); ?>
     </div>
 </div>
 
@@ -150,9 +150,18 @@ $form = $this->beginWidget(
             $model->title,
             [
                 'class' => 'preview-image',
-                'style' => !$model->isNewRecord && $model->image ? '' : 'display:none'
+                'style' => !$model->isNewRecord && $model->image ? 'max-width: 100%;' : 'display:none; max-width: 100%;'
             ]
         ); ?>
+
+        <?php if (!$model->isNewRecord && $model->image): ?>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="delete-file"> <?= Yii::t('YupeModule.yupe', 'Delete the file') ?>
+                </label>
+            </div>
+        <?php endif; ?>
+
         <?php echo $form->fileFieldGroup(
             $model,
             'image',

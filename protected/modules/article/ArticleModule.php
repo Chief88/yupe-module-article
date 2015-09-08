@@ -156,7 +156,7 @@ class ArticleModule extends WebModule
 
     public function getName()
     {
-        return Yii::t('ArticleModule.article', 'article');
+        return Yii::t('ArticleModule.article', 'Article');
     }
 
     public function getDescription()
@@ -166,7 +166,7 @@ class ArticleModule extends WebModule
 
     public function getAuthor()
     {
-        return Yii::t('ArticleModule.article', 'Chief88');
+        return Yii::t('ArticleModule.article', 'Sergey Latyskov');
     }
 
     public function getAuthorEmail()
@@ -225,7 +225,7 @@ class ArticleModule extends WebModule
     {
         return [
             [
-                'name'        => 'article.articleManager',
+                'name'        => 'article.articleBackendManager',
                 'description' => Yii::t('ArticleModule.article', 'Manage article'),
                 'type'        => AuthItem::TYPE_TASK,
                 'items'       => [
@@ -247,11 +247,6 @@ class ArticleModule extends WebModule
                     [
                         'type'        => AuthItem::TYPE_OPERATION,
                         'name'        => 'article.articleBackend.Update',
-                        'description' => Yii::t('ArticleModule.article', 'Editing article')
-                    ],
-                    [
-                        'type'        => AuthItem::TYPE_OPERATION,
-                        'name'        => 'article.articleBackend.Inline',
                         'description' => Yii::t('ArticleModule.article', 'Editing article')
                     ],
                     [

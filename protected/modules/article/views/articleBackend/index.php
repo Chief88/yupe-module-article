@@ -70,6 +70,12 @@ $this->menu = [
         'filter'            => $model,
         'columns'           => [
             [
+                'name'   => 'image',
+                'type'   => 'raw',
+                'value'  => '$data->image ? CHtml::image($data->getImageUrl(0, 50), $data->title, array("max-width"  => "200px", "max-height" => "100%")) : "---"',
+                'filter' => false
+            ],
+            [
                 'class'    => 'bootstrap.widgets.TbEditableColumn',
                 'name'     => 'title',
                 'editable' => [

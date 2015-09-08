@@ -142,7 +142,7 @@ class Article extends yupe\models\YModel
                     'height'  => 9999,
                     'quality' => [
                         'jpegQuality'         => 100,
-                        'pngCompressionLevel' => 10
+                        'pngCompressionLevel' => 9
                     ],
                 ],
                 'defaultImage'   => $module->getAssetsUrl() . '/img/nophoto.jpg',
@@ -204,7 +204,7 @@ class Article extends yupe\models\YModel
     {
         $this->getDbCriteria()->mergeWith(
             [
-                'condition' => 'lang = :lang',
+                'condition' => 't.lang = :lang',
                 'params'    => [':lang' => $lang],
             ]
         );
@@ -291,11 +291,6 @@ class Article extends yupe\models\YModel
             'criteria' => $criteria,
             'sort'     => ['defaultOrder' => 't.sort']
         ]);
-    }
-
-    public function getLink()
-    {
-        return Yii::app()->createUrl('/article/article/show/', ['slug' => $this->slug]);
     }
 
     public function getPermaLink()

@@ -19,8 +19,7 @@ class ArticleBackendController extends yupe\components\controllers\BackControlle
             ['allow', 'actions' => ['create'], 'roles' => ['article.articleBackend.Create']],
             ['allow', 'actions' => ['delete'], 'roles' => ['article.articleBackend.Delete']],
             ['allow', 'actions' => ['index'], 'roles' => ['article.articleBackend.Index']],
-            ['allow', 'actions' => ['inline'], 'roles' => ['article.articleBackend.Update']],
-            ['allow', 'actions' => ['update', 'toggle', 'inline'], 'roles' => ['article.articleBackend.Update']],
+            ['allow', 'actions' => ['update', 'toggle', 'inline', 'sortable'], 'roles' => ['article.articleBackend.Update']],
             ['allow', 'actions' => ['view'], 'roles' => ['article.articleBackend.View']],
             ['deny']
         ];

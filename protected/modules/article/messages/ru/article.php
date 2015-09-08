@@ -70,6 +70,7 @@ return [
     'On moderation'                                                    => 'На модерации',
     'Bad raquest. Please don\'t use similar requests anymore!'         => 'Неверный запрос. Пожалуйста, больше не повторяйте такие запросы!',
     'article'                                                             => 'статьи',
+    'Article'                                                             => 'Статьи',
     'article - create'                                                    => 'статьи - добавление',
     'article - show'                                                      => 'статьи - просмотр',
     'article - edit'                                                      => 'статьи - редактирование',
