@@ -93,11 +93,16 @@ class ArticleController extends yupe\components\controllers\FrontController
 
     public function actionShow($slug)
     {
-        $article = Article::model()->published();
+        $model = Article::model()->published();
 
-        $article = ($this->isMultilang())
-            ? $article->language(Yii::app()->language)->find('slug = :slug', [':slug' => $slug])
-            : $article->find('slug = :slug', [':slug' => $slug]);
+        if($this->isMultilang()){
+            $article = $model->language(Yii::app()->language)->find('slug = :slug', [':slug' => $slug]);
+            if(!$article){
+                $article = $model->language(Yii::app()->getController()->yupe->defaultLanguage)->find('slug = :slug', [':slug' => $slug]);
+            }
+        } else {
+            $article = $model->find('slug = :slug', [':slug' => $slug]);
+        }
 
         if (!$article) {
             throw new CHttpException(404, Yii::t('ArticleModule.article', 'Article article was not found!'));

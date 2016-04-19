@@ -8,6 +8,7 @@ class GetArticleWidget extends yupe\widgets\YWidget
     public $categorySlugs = null;
     public $limit = 3;
     public $view = 'listArticle';
+    public $isRandom = false;
 
     public function run()
     {
@@ -20,10 +21,10 @@ class GetArticleWidget extends yupe\widgets\YWidget
 
         if ($this->categorySlugs) {
             if (is_array($this->categorySlugs)) {
-                $criteria->addCondition('category.slug = :categorySlugs');
+                $criteria->addCondition('category.slug = :categorySlugs AND category.lang = :lang');
                 $criteria->params[':categorySlugs'] = $this->categorySlugs;
             } else {
-                $criteria->addCondition('category.slug = :categorySlugs');
+                $criteria->addCondition('category.slug = :categorySlugs AND category.lang = :lang');
                 $criteria->params[':categorySlugs'] = $this->categorySlugs;
             }
         }
@@ -40,9 +41,13 @@ class GetArticleWidget extends yupe\widgets\YWidget
         if($this->limit){
             $criteria->limit = (int)$this->limit;
         }
-        $criteria->order = 't.sort';
+        $criteria->order = $this->isRandom ? 'rand()' : 't.sort';
 
         $models = Article::model()->findAll($criteria);
+        if(empty($models)){
+            $criteria->params[':lang'] = Yii::app()->getController()->yupe->defaultLanguage;
+            $models = Article::model()->findAll($criteria);
+        }
         $this->render($this->view, ['models' => $models]);
     }
 }
